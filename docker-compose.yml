@@ -1,0 +1,15 @@
+services:
+  docx2pdf:
+    build: .
+    ports:
+      - "5525:5525"
+    restart: unless-stopped
+    environment:
+      - LibreOffice__ExecutablePath=libreoffice
+      - ASPNETCORE_ENVIRONMENT=Production
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5525/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
