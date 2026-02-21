@@ -33,3 +33,4 @@ F:\projects\Docx2PDFService\obj\Release\net8.0\refint\Docx2PDFService.dll
 F:\projects\Docx2PDFService\obj\Release\net8.0\Docx2PDFService.pdb
 F:\projects\Docx2PDFService\obj\Release\net8.0\Docx2PDFService.genruntimeconfig.cache
 F:\projects\Docx2PDFService\obj\Release\net8.0\ref\Docx2PDFService.dll
+F:\projects\Docx2PDFService\obj\Release\net8.0\Docx2PDFService.sourcelink.json

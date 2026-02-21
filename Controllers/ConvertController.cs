@@ -39,7 +39,7 @@ public class ConvertController : ControllerBase
 
     [HttpPost]
     [Consumes("multipart/form-data")]
-    [Produces("application/pdf")]
+    [Produces("application/pdf", "application/json")]
     public async Task<IActionResult> Convert(CancellationToken ct)
     {
         if (!Request.HasFormContentType)
