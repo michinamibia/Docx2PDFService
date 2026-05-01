@@ -12,7 +12,7 @@ env:
 
   # Azure
   CONTAINER_APP_NAME: docx2pdf
-  RESOURCE_GROUP: E-LMS-V2
+  RESOURCE_GROUP: LMS-Switzerland
 
 jobs:
   build-and-deploy:
