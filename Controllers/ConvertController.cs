@@ -12,17 +12,19 @@ public class ConvertController : ControllerBase
 {
     private readonly IDocxProcessingService _docxService;
     private readonly IPdfConversionService  _pdfService;
+    private readonly IBlobStorageService?   _blobService;  // null = disabled
     private readonly ILogger<ConvertController> _logger;
 
     public ConvertController(
         IDocxProcessingService docxService,
         IPdfConversionService  pdfService,
-        ILogger<ConvertController> logger)
+        ILogger<ConvertController> logger,
+        IBlobStorageService? blobService = null)
     {
         _docxService = docxService;
         _pdfService  = pdfService;
+        _blobService = blobService;
         _logger      = logger;
-
     }
 
     // Consistent error helper
@@ -111,6 +113,16 @@ public class ConvertController : ControllerBase
             var baseName = Path.GetFileNameWithoutExtension(origName);
             if (string.IsNullOrWhiteSpace(baseName)) baseName = "document";
             var fileName = baseName + ".pdf";
+
+            // ── 6. Upload to blob storage (optional) ──────────────────
+            if (_blobService is not null)
+            {
+                _logger.LogInformation("Uploading PDF to blob storage as '{FileName}'...", fileName);
+                await using var pdfStream = new MemoryStream(pdfBytes);
+                var url = await _blobService.UploadAsync(pdfStream, fileName, ct);
+                _logger.LogInformation("Blob upload complete. URL: {Url}", url);
+                return Ok(new { url });
+            }
 
             return File(pdfBytes, "application/pdf", fileName);
         }
