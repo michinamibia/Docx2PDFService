@@ -7,11 +7,9 @@ services:
     environment:
       - LibreOffice__ExecutablePath=libreoffice
       - ASPNETCORE_ENVIRONMENT=Production
-      # Optional: configure Azure Blob Storage to store PDFs and return a URL.
-      # Leave blank (or omit) to return PDF bytes directly.
-      - AzureBlob__ConnectionString=
-      - AzureBlob__ContainerName=pdfs
-      - AzureBlob__SasExpiryHours=24
+      # AzureBlob__ConnectionString and AzureBlob__ContainerName are intentionally
+      # NOT set here. Inject them via Azure Container Apps secrets / environment
+      # variables so they are never stored in source control.
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80/health"]
       interval: 30s
