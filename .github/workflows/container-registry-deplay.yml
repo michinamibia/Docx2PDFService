@@ -1,4 +1,4 @@
-name: Build and Deploy to Azure Container Apps
+name: Build to Azure Container Apps via GHCR
 
 on:
   push:
