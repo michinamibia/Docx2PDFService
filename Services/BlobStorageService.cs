@@ -1,6 +1,7 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage;
+using System.Linq;
 
 namespace Docx2PDFService.Services;
 
@@ -38,12 +39,22 @@ public class AzureBlobStorageService : IBlobStorageService
     public async Task<string> UploadAsync(Stream content, string fileName, CancellationToken ct = default)
     {
         // Ensure the container exists
+        _logger.LogInformation("Ensuring container exists: {Container}", _container.Name);
         await _container.CreateIfNotExistsAsync(PublicAccessType.None, cancellationToken: ct);
 
-        // Build a non-guessable blob name: GUID prefix + original name
-        var blobName = $"{Guid.NewGuid():N}/{fileName}";
+        // Sanitize the provided fileName to avoid invalid resource names
+        var safeFileName = Path.GetFileName(fileName ?? string.Empty);
+        safeFileName = new string((safeFileName ?? string.Empty).Where(c => !char.IsControl(c)
+                                            && c != '/' && c != '\\'
+                                            && c != '?' && c != '#' && c != ':' && c != '*'
+                                            && c != '<' && c != '>' && c != '|' && c != '"')
+                                 .ToArray()).Trim('.');
+        if (string.IsNullOrWhiteSpace(safeFileName)) safeFileName = "file.pdf";
 
-        _logger.LogInformation("Uploading blob: {BlobName}", blobName);
+        // Build a non-guessable blob name: GUID prefix + sanitized name
+        var blobName = $"{Guid.NewGuid():N}/{safeFileName}";
+
+        _logger.LogInformation("Uploading blob: {BlobName} to container {Container}", blobName, _container.Name);
 
         var blob = _container.GetBlobClient(blobName);
         content.Position = 0;
