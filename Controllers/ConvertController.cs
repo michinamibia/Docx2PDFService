@@ -3,6 +3,7 @@ using Docx2PDFService.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Linq;
 
 namespace Docx2PDFService.Controllers;
 
@@ -110,7 +111,17 @@ public class ConvertController : ControllerBase
             _logger.LogInformation("Conversion successful. PDF size: {Size} bytes", pdfBytes.Length);
 
             var origName = uploadedFile.FileName ?? "document";
+            // Remove any path components that may be sent by some clients
+            origName = Path.GetFileName(origName);
+
+            // Derive a base name and strip control/unsafe characters
             var baseName = Path.GetFileNameWithoutExtension(origName);
+            if (string.IsNullOrWhiteSpace(baseName)) baseName = "document";
+            baseName = new string(baseName.Where(c => !char.IsControl(c)
+                                                      && c != '/' && c != '\\'
+                                                      && c != '?' && c != '#' && c != ':' && c != '*'
+                                                      && c != '<' && c != '>' && c != '|' && c != '"')
+                                           .ToArray()).Trim('.');
             if (string.IsNullOrWhiteSpace(baseName)) baseName = "document";
             var fileName = baseName + ".pdf";
 

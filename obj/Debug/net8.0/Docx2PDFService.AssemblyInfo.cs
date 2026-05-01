@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Docx2PDFService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a3e3d0a2d31672e4a83621fe9fb665a4818d1109")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dbf79f838bf5c6e85cd3aa5a971c260c734c5b56")]
 [assembly: System.Reflection.AssemblyProductAttribute("Docx2PDFService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Docx2PDFService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
