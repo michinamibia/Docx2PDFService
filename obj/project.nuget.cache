@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "Cc++6czLgjE=",
+=======
+  "dgSpecHash": "O34j54ecLLk=",
+>>>>>>> main
   "success": true,
   "projectFilePath": "F:\\projects\\Docx2PDFService\\Docx2PDFService.csproj",
   "expectedPackageFiles": [
