@@ -14,6 +14,13 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<IDocxProcessingService, DocxProcessingService>();
 builder.Services.AddSingleton<IPdfConversionService,  LibreOfficePdfConversionService>();
 
+// ── Azure Blob Storage (optional) ─────────────────────────────────────
+// Register only when AzureBlob:ConnectionString is configured.
+if (!string.IsNullOrWhiteSpace(builder.Configuration["AzureBlob:ConnectionString"]))
+{
+    builder.Services.AddSingleton<IBlobStorageService, AzureBlobStorageService>();
+}
+
 // ── Kestrel port ──────────────────────────────────────────────────────
 builder.WebHost.UseUrls("http://0.0.0.0:80");
 

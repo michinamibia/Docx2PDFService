@@ -78,6 +78,39 @@ docker compose ps
 docker compose logs -f
 ```
 
+## Azure Blob Storage (optional)
+
+By default, the service returns the PDF bytes directly in the HTTP response.
+
+If you configure Azure Blob Storage credentials, the service uploads the PDF to a private blob container and returns a JSON object containing a time-limited, non-guessable SAS URL instead:
+
+```json
+{ "url": "https://<account>.blob.core.windows.net/pdfs/<guid>/document.pdf?..." }
+```
+
+### Environment variables
+
+| Variable | Description | Default |
+|---|---|---|
+| `AzureBlob__ConnectionString` | Azure Storage connection string. Leave blank to disable. | `""` (disabled) |
+| `AzureBlob__ContainerName` | Container name to store PDFs in. Created automatically if missing. | `pdfs` |
+| `AzureBlob__SasExpiryHours` | How many hours the SAS URL stays valid. | `24` |
+
+### docker-compose example
+
+```yaml
+environment:
+  - AzureBlob__ConnectionString=DefaultEndpointsProtocol=https;AccountName=<account>;AccountKey=<key>;EndpointSuffix=core.windows.net
+  - AzureBlob__ContainerName=pdfs
+  - AzureBlob__SasExpiryHours=48
+```
+
+### Notes
+
+- The blob is stored with a GUID-prefixed name (`<guid>/<filename>.pdf`), making the URL non-guessable even in a private container.
+- The container is created with **private** access. The SAS URL grants read-only access for the configured expiry window.
+- When Azure Blob Storage is disabled (no connection string), the API continues to return the PDF binary directly — behaviour is unchanged.
+
 ## Troubleshooting
 
 - HTTP 400 responses will include `detail` explaining the problem (e.g. invalid JSON in `fields`, missing form parts).

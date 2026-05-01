@@ -34,3 +34,11 @@ F:\projects\Docx2PDFService\obj\Release\net8.0\Docx2PDFService.pdb
 F:\projects\Docx2PDFService\obj\Release\net8.0\Docx2PDFService.genruntimeconfig.cache
 F:\projects\Docx2PDFService\obj\Release\net8.0\ref\Docx2PDFService.dll
 F:\projects\Docx2PDFService\obj\Release\net8.0\Docx2PDFService.sourcelink.json
+F:\projects\Docx2PDFService\bin\Release\net8.0\fields.json
+F:\projects\Docx2PDFService\bin\Release\net8.0\Azure.Core.dll
+F:\projects\Docx2PDFService\bin\Release\net8.0\Azure.Storage.Blobs.dll
+F:\projects\Docx2PDFService\bin\Release\net8.0\Azure.Storage.Common.dll
+F:\projects\Docx2PDFService\bin\Release\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+F:\projects\Docx2PDFService\bin\Release\net8.0\System.ClientModel.dll
+F:\projects\Docx2PDFService\bin\Release\net8.0\System.IO.Hashing.dll
+F:\projects\Docx2PDFService\bin\Release\net8.0\System.Memory.Data.dll
